@@ -1,0 +1,21 @@
+{
+  "name": "testmu-sdet1-shaky",
+  "version": "1.0.0",
+  "description": "AI-Native Quality Engineering Challenge for TestMu AI SDET-1",
+  "author": "shaky",
+  "license": "MIT",
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test tests/e2e",
+    "test:api": "playwright test tests/api",
+    "test:explainer": "playwright test tests/failure-explainer",
+    "test:report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2",
+    "dotenv": "^16.4.7",
+    "typescript": "^5.7.2"
+  }
+}
