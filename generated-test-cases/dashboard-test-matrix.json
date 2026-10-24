@@ -1,0 +1,102 @@
+[
+  {
+    "id": "TC-DASH-001",
+    "title": "Widget Loading and Data Calculation Accuracy",
+    "component": "MetricWidgets",
+    "role": "Any",
+    "viewport": "1280x720",
+    "steps": [
+      "Authenticate and navigate to /dashboard",
+      "Wait for /api/v1/test-runs network response",
+      "Verify Total Runs widget equals response length (4)",
+      "Verify Passing Rate equals (passed_count / total * 100) (50.0%)",
+      "Verify Average Duration matches mathematical average of durationSec"
+    ],
+    "expectedBehavior": "All 4 widgets render correctly formatted metrics without rounding errors"
+  },
+  {
+    "id": "TC-DASH-002",
+    "title": "Status Dropdown Filtering",
+    "component": "ToolbarFilter",
+    "role": "Any",
+    "viewport": "1280x720",
+    "steps": [
+      "Select 'passed' in dropdown",
+      "Assert 2 rows visible with .badge-passed",
+      "Select 'failed' in dropdown",
+      "Assert 1 row visible with .badge-failed",
+      "Select 'all' in dropdown",
+      "Assert 4 rows visible"
+    ],
+    "expectedBehavior": "Instant client-side filter update without DOM reflow jitter"
+  },
+  {
+    "id": "TC-DASH-003",
+    "title": "Multi-Column Text Search",
+    "component": "SearchBar",
+    "role": "Any",
+    "viewport": "1280x720",
+    "steps": [
+      "Type 'Billing' into search box",
+      "Check matching row TR-102",
+      "Clear search box and type 'admin@testmu.ai'",
+      "Assert only author-matching rows are visible"
+    ],
+    "expectedBehavior": "Filters records matching ID, name, or author case-insensitively"
+  },
+  {
+    "id": "TC-DASH-004",
+    "title": "Column Header Sorting (Numeric & String)",
+    "component": "RunsTable",
+    "role": "Any",
+    "viewport": "1280x720",
+    "steps": [
+      "Click 'Duration (s)' header once (asc)",
+      "Verify rows sort: 42s, 61s, 95s, 184s",
+      "Click 'Duration (s)' header second time (desc)",
+      "Verify rows sort: 184s, 95s, 61s, 42s"
+    ],
+    "expectedBehavior": "Table reorders dynamically without page reloads"
+  },
+  {
+    "id": "TC-DASH-005",
+    "title": "Admin Role Mutation Controls Visibility",
+    "component": "RBAC",
+    "role": "Admin",
+    "viewport": "1280x720",
+    "steps": [
+      "Login with admin token",
+      "Inspect DOM for #btn-create-run",
+      "Inspect DOM for .btn-delete-run"
+    ],
+    "expectedBehavior": "+ New Test Run CTA is visible; Delete action buttons exist in every row"
+  },
+  {
+    "id": "TC-DASH-006",
+    "title": "Viewer Role Mutation Controls Masking",
+    "component": "RBAC",
+    "role": "Viewer",
+    "viewport": "1280x720",
+    "steps": [
+      "Login with viewer token",
+      "Assert #btn-create-run has display:none",
+      "Assert #actions-header and .btn-delete-run are not rendered"
+    ],
+    "expectedBehavior": "Mutating UI actions are strictly stripped from DOM for read-only users"
+  },
+  {
+    "id": "TC-DASH-007",
+    "title": "Mobile Responsive Viewport and Navigation Drawer",
+    "component": "ResponsiveLayout",
+    "role": "Any",
+    "viewport": "375x667",
+    "steps": [
+      "Resize browser to 375x667",
+      "Assert sidebar is not visible in viewport",
+      "Assert hamburger toggle button is visible",
+      "Click hamburger toggle",
+      "Assert sidebar class contains 'open' and is positioned on screen"
+    ],
+    "expectedBehavior": "Layout smoothly transforms from desktop layout to mobile drawer"
+  }
+]

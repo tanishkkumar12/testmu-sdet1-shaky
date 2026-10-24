@@ -1,0 +1,91 @@
+[
+  {
+    "id": "TC-AUTH-001",
+    "title": "Valid Admin Login and Session Initiation",
+    "priority": "P0",
+    "type": "Functional",
+    "preconditions": "Admin user exists in active state in user directory",
+    "inputs": {
+      "email": "admin@testmu.ai",
+      "password": "AdminPass123!"
+    },
+    "expectedResult": "Redirected to /dashboard; auth_token set; admin role badge visible",
+    "securityConsiderations": "Password transmitted over encrypted transport; credential masked in UI"
+  },
+  {
+    "id": "TC-AUTH-002",
+    "title": "Valid Viewer Login and Restricted Session Initiation",
+    "priority": "P0",
+    "type": "Functional",
+    "preconditions": "Viewer user exists in active state",
+    "inputs": {
+      "email": "engineer@testmu.ai",
+      "password": "EngineerPass123!"
+    },
+    "expectedResult": "Redirected to /dashboard; auth_token set; viewer role badge visible",
+    "securityConsiderations": "User permissions scoped correctly on initial session handshake"
+  },
+  {
+    "id": "TC-AUTH-003",
+    "title": "Invalid Password Rejection",
+    "priority": "P1",
+    "type": "Negative",
+    "preconditions": "User email exists",
+    "inputs": {
+      "email": "admin@testmu.ai",
+      "password": "WrongPassword!"
+    },
+    "expectedResult": "HTTP 401; alert 'Invalid email or password' displayed; no token issued",
+    "securityConsiderations": "Generic error prevents attacker from confirming password correctness separately from email existence"
+  },
+  {
+    "id": "TC-AUTH-004",
+    "title": "Unregistered Email Rejection",
+    "priority": "P1",
+    "type": "Negative",
+    "preconditions": "Email does not exist in platform database",
+    "inputs": {
+      "email": "nonexistent@testmu.ai",
+      "password": "AnyPassword123!"
+    },
+    "expectedResult": "HTTP 401; identical 'Invalid email or password' alert",
+    "securityConsiderations": "Identical error message and constant-time comparison prevents timing attacks"
+  },
+  {
+    "id": "TC-AUTH-005",
+    "title": "Forgot Password Email Enumeration Prevention",
+    "priority": "P1",
+    "type": "Security",
+    "preconditions": "Endpoint /api/v1/auth/forgot-password accessible",
+    "inputs": {
+      "email": "attacker-test@domain.com"
+    },
+    "expectedResult": "HTTP 200 with standard response: 'If an account exists with this email, password recovery instructions have been sent.'",
+    "securityConsiderations": "Protects against automated username and email harvesting scripts"
+  },
+  {
+    "id": "TC-AUTH-006",
+    "title": "Brute-Force Account Lockout Enforcement",
+    "priority": "P0",
+    "type": "Security",
+    "preconditions": "Clean attempt counter for target user account",
+    "inputs": {
+      "email": "admin@testmu.ai",
+      "passwords": ["Wrong1", "Wrong2", "Wrong3", "Wrong4", "Wrong5"]
+    },
+    "expectedResult": "On 5th failed attempt, account status is locked; message states 15-minute lockout; valid password rejected while locked",
+    "securityConsiderations": "Mitigates credential stuffing and brute-force password cracking attacks"
+  },
+  {
+    "id": "TC-AUTH-007",
+    "title": "Session Expiry and Protected Route Guard",
+    "priority": "P1",
+    "type": "Session",
+    "preconditions": "No auth token in browser storage / expired token",
+    "inputs": {
+      "navigationTarget": "/dashboard"
+    },
+    "expectedResult": "Client immediately redirects to /login; dashboard DOM components are not rendered",
+    "securityConsiderations": "Prevents unauthorized viewing of proprietary test telemetry data"
+  }
+]

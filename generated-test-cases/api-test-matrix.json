@@ -1,0 +1,106 @@
+[
+  {
+    "id": "TC-API-001",
+    "endpoint": "/api/v1/test-runs",
+    "httpMethod": "GET",
+    "authType": "Bearer valid-token-admin",
+    "payload": null,
+    "expectedStatus": 200,
+    "headerAssertions": {
+      "content-type": "application/json"
+    },
+    "schemaAssertions": "Array of TestRun objects matching { id, name, suite, environment, status, durationSec, author, createdAt }"
+  },
+  {
+    "id": "TC-API-002",
+    "endpoint": "/api/v1/test-runs",
+    "httpMethod": "GET",
+    "authType": "None",
+    "payload": null,
+    "expectedStatus": 401,
+    "headerAssertions": {
+      "content-type": "application/json"
+    },
+    "schemaAssertions": "RFC 7807 problem details: { type: '.../unauthorized', title: 'Unauthorized', status: 401 }"
+  },
+  {
+    "id": "TC-API-003",
+    "endpoint": "/api/v1/test-runs",
+    "httpMethod": "POST",
+    "authType": "Bearer valid-token-admin",
+    "payload": {
+      "name": "Integration Kafka Sync",
+      "suite": "Messaging",
+      "environment": "staging"
+    },
+    "expectedStatus": 201,
+    "headerAssertions": {
+      "content-type": "application/json"
+    },
+    "schemaAssertions": "Created TestRun object containing generated 'id', status 'running', author 'admin@testmu.ai'"
+  },
+  {
+    "id": "TC-API-004",
+    "endpoint": "/api/v1/test-runs",
+    "httpMethod": "POST",
+    "authType": "Bearer valid-token-admin",
+    "payload": {
+      "name": "Missing Suite & Environment"
+    },
+    "expectedStatus": 400,
+    "headerAssertions": {
+      "content-type": "application/json"
+    },
+    "schemaAssertions": "{ type: '.../validation-error', status: 400, invalidParams: [{ field: 'suite' }, { field: 'environment' }] }"
+  },
+  {
+    "id": "TC-API-005",
+    "endpoint": "/api/v1/test-runs/TR-999-DOES-NOT-EXIST",
+    "httpMethod": "GET",
+    "authType": "Bearer valid-token-admin",
+    "payload": null,
+    "expectedStatus": 404,
+    "headerAssertions": {
+      "content-type": "application/json"
+    },
+    "schemaAssertions": "{ type: '.../not-found', title: 'Resource Not Found', status: 404 }"
+  },
+  {
+    "id": "TC-API-006",
+    "endpoint": "/api/v1/test-runs/TR-101",
+    "httpMethod": "DELETE",
+    "authType": "Bearer valid-token-viewer",
+    "payload": null,
+    "expectedStatus": 403,
+    "headerAssertions": {
+      "content-type": "application/json"
+    },
+    "schemaAssertions": "{ type: '.../forbidden', title: 'Forbidden', status: 403 }"
+  },
+  {
+    "id": "TC-API-007",
+    "endpoint": "/api/v1/rate-limit-test",
+    "httpMethod": "GET",
+    "authType": "None",
+    "payload": null,
+    "expectedStatus": 429,
+    "headerAssertions": {
+      "x-ratelimit-limit": "20",
+      "x-ratelimit-remaining": "0",
+      "retry-after": "60"
+    },
+    "schemaAssertions": "{ status: 429, title: 'Too Many Requests' }"
+  },
+  {
+    "id": "TC-API-008",
+    "endpoint": "/api/v1/chaos/server-error",
+    "httpMethod": "GET",
+    "authType": "None",
+    "payload": null,
+    "expectedStatus": 500,
+    "headerAssertions": {
+      "content-type": "application/json"
+    },
+    "schemaAssertions": "{ status: 500, title: 'Internal Server Error' }"
+  }
+]
