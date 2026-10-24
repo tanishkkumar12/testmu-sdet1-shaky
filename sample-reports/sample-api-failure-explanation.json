@@ -6,5 +6,5 @@
   "failureDomain": "auth_permission",
   "confidenceScore": 0.95,
   "rawResponse": "{\n  \"failureTitle\": \"API Authorization Failure (403 Forbidden)\",\n  \"rootCauseSummary\": \"User authenticated with Viewer role attempted an operation requiring Admin permissions.\",\n  \"plainEnglishExplanation\": \"The API endpoint rejected the DELETE request with HTTP 403 Forbidden because 'valid-token-viewer' lacks administrative permissions.\",\n  \"suggestedFix\": \"Supply an Admin Bearer token (e.g., 'valid-token-admin') in the Authorization header before issuing DELETE /api/v1/test-runs/:id.\",\n  \"failureDomain\": \"auth_permission\",\n  \"confidenceScore\": 0.95\n}",
-  "generatedAt": "2026-10-24T18:07:44.566Z"
+  "generatedAt": "2026-10-24T18:09:31.796Z"
 }
