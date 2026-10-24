@@ -5,6 +5,8 @@
   "author": "shaky",
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
+    "pretest": "tsc",
     "test": "playwright test",
     "test:e2e": "playwright test tests/e2e",
     "test:api": "playwright test tests/api",

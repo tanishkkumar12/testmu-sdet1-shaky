@@ -38,7 +38,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'node dist/mock-server/server.js',
+    command: 'node dist/src/mock-server/server.js',
     url: `${BASE_URL}/health`,
     reuseExistingServer: !process.env.CI,
     timeout: 10000,
