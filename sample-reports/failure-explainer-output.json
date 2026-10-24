@@ -1,0 +1,28 @@
+[
+  {
+    "test": "TC-AI-001: Failure Explainer diagnoses UI selector failure with DOM snapshot and suggests code fix",
+    "file": "tests/failure-explainer/failure-explainer.spec.ts",
+    "diagnosis": {
+      "failureTitle": "UI Element Selector Timeout",
+      "rootCauseSummary": "Target locator '#welcome-banner' was not found or visible within 5000ms timeout.",
+      "plainEnglishExplanation": "The page did not transition to the authenticated welcome view because credentials failed, leaving an error alert visible in the DOM.",
+      "suggestedFix": "Verify login credentials or await the error alert '#alert-error' instead of '#welcome-banner' when testing invalid submissions.",
+      "failureDomain": "ui_selector_drift",
+      "confidenceScore": 0.92,
+      "generatedAt": "2026-10-24T18:07:44.257Z"
+    }
+  },
+  {
+    "test": "TC-AI-002: Failure Explainer diagnoses API 403 Forbidden permission mismatch and suggests header/role fix",
+    "file": "tests/failure-explainer/failure-explainer.spec.ts",
+    "diagnosis": {
+      "failureTitle": "API Authorization Failure (403 Forbidden)",
+      "rootCauseSummary": "User authenticated with Viewer role attempted an operation requiring Admin permissions.",
+      "plainEnglishExplanation": "The API endpoint rejected the DELETE request with HTTP 403 Forbidden because 'valid-token-viewer' lacks administrative permissions.",
+      "suggestedFix": "Supply an Admin Bearer token (e.g., 'valid-token-admin') in the Authorization header before issuing DELETE /api/v1/test-runs/:id.",
+      "failureDomain": "auth_permission",
+      "confidenceScore": 0.95,
+      "generatedAt": "2026-10-24T18:07:44.566Z"
+    }
+  }
+]

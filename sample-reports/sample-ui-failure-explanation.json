@@ -1,0 +1,10 @@
+{
+  "failureTitle": "UI Element Selector Timeout",
+  "rootCauseSummary": "Target locator '#welcome-banner' was not found or visible within 5000ms timeout.",
+  "plainEnglishExplanation": "The page did not transition to the authenticated welcome view because credentials failed, leaving an error alert visible in the DOM.",
+  "suggestedFix": "Verify login credentials or await the error alert '#alert-error' instead of '#welcome-banner' when testing invalid submissions.",
+  "failureDomain": "ui_selector_drift",
+  "confidenceScore": 0.92,
+  "rawResponse": "{\n  \"failureTitle\": \"UI Element Selector Timeout\",\n  \"rootCauseSummary\": \"Target locator '#welcome-banner' was not found or visible within 5000ms timeout.\",\n  \"plainEnglishExplanation\": \"The page did not transition to the authenticated welcome view because credentials failed, leaving an error alert visible in the DOM.\",\n  \"suggestedFix\": \"Verify login credentials or await the error alert '#alert-error' instead of '#welcome-banner' when testing invalid submissions.\",\n  \"failureDomain\": \"ui_selector_drift\",\n  \"confidenceScore\": 0.92\n}",
+  "generatedAt": "2026-10-24T18:07:44.257Z"
+}
